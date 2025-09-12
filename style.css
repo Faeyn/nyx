@@ -1,0 +1,76 @@
+:root {
+    --color-bg-dark: #02080c;
+    --color-bg-light: #092148;
+
+    --color-neon-teal: #4deeea;
+    --color-neon-green: #74ee15;
+    --color-neon-yellow: #ffe700;
+    --color-neon-pink: #f000ff;
+    --color-neon-blue: #001eff;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+
+    background: linear-gradient(180deg, var(--color-bg-dark), 50%, var(--color-bg-light));
+    background-attachment: fixed;
+}
+
+
+hr {
+    border: none;
+    height: 2px;
+    background: var(--color-hg);
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}
+
+p {
+    font-family: verdana;
+    font-size: 20px;
+    color: white;
+}
+
+.header {
+    border: solid;
+    border-color: var(--color-neon-teal);
+    border-width: 0px 2px 2px 2px;
+
+    height: 100px;
+    max-width: 1280px;
+    min-width: 320px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.vc {
+    justify-content: center;
+}
+
+.block {
+    height: 50px;
+    width: 50px;
+}
+
+.test_block {
+    height: 50px;
+    width: 50px;
+
+    border-radius: 50px;
+    border-width: 2px;
+    border-color: white;
+    background: linear-gradient(45deg, var(--color-neon-teal), var(--color-neon-pink));
+}

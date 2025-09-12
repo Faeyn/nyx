@@ -1,0 +1,107 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <link rel="stylesheet" style="text/css" href="style.css"/>
+        <title> Faeyndom </title>
+    </head>
+    <body class="col">
+        <div class="header">
+            <div class="col vc">
+                <h1>
+                    Start
+                <h1>
+            </div>
+        </div>
+        
+        <p>
+        This is the start of something amazing!
+        </p>
+
+        <div class="row">
+            <div id="hello" class="block" style="background: var(--color-neon-yellow)">
+            </div>
+            <div class="block" style="background: var(--color-neon-teal)">
+            </div>
+            <div class="block" style="background: var(--color-neon-green)">
+            </div>
+            <div class="block" style="background: var(--color-neon-pink)">
+            </div>
+            <div class="block" style="background: var(--color-neon-blue)">
+            </div>
+        </div>
+
+        <div id="board" style="width:100vw; height:100vw; background: rgba(255, 255, 255, 0.05)">
+            <div id="test" class="test_block" style="position: absolute">
+            </div>
+        </div>
+        <p>Clicked: <span id="count">0</span> times</p>
+        <p>Miss: <span id="misscount">0</span> times </p>
+        <p>Stat: <span id="velocity">0</span> / m </p>
+        <script>
+            
+            function sleep(ms) {
+              return new Promise(resolve => setTimeout(resolve, ms));
+            };
+            
+            function randomIntBetween(max, min) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            };
+
+            const board = document.getElementById("board");
+            const {width: boardWidth, height: boardHeight} = board.getBoundingClientRect();
+
+            const el = document.getElementById("test");
+            const {width: elWidth, height: elHeight} = el.getBoundingClientRect();
+            
+            function setPosition() {
+                let x = randomIntBetween(boardWidth - elWidth, 0)
+                let y = randomIntBetween(boardHeight - elHeight, 0)
+                el.style.transform = `translate(${x}px, ${y}px)`;
+            }
+
+            //async function loop() {
+                //while (true) {
+                    //setPosition();
+                    //await sleep(1000);
+                //}
+            //};
+
+            //loop();
+            setPosition(); 
+
+            window.addEventListener("resize", () => {
+                const { widht: boardWidth, height: boardHeight} = board.getBoundingClientRect();
+                setPosition();
+              });
+            
+            const start = Date.now();
+            let count = 0;
+            let missCount = 0;
+            let velocity = 0;
+
+            const counter = document.getElementById("count");
+            const statVelocity = document.getElementById("velocity");
+            
+            el.addEventListener("click", () => {
+                count++;
+                missCount--;
+                velocity = Math.floor(count / (Date.now() - start) * 1000 * 60);
+                console.log(velocity);
+
+                statVelocity.textContent = velocity;
+                counter.textContent = count;
+                setPosition();
+            });
+            
+            const missCounter = document.getElementById("misscount");
+            board.addEventListener("click", () => {
+                missCount++;
+                missCounter.textContent = missCount;
+                setPosition();
+            });
+
+
+        </script>
+
+    </body>
+</html>
