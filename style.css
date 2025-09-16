@@ -38,9 +38,10 @@ p {
 .header {
     border: solid;
     border-color: var(--color-neon-teal);
-    border-width: 0px 2px 2px 2px;
+    border-width: 0px 0px 2px 0px;
 
     height: 100px;
+    width: 100%;
     max-width: 1280px;
     min-width: 320px;
 }
@@ -49,15 +50,25 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    row-gap: 20px;
+}
+
+.cc {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
 }
 
 .row {
     display: flex;
     flex-direction: row;
-}
 
-.vc {
-    justify-content: center;
+    column-gap: 20px;
 }
 
 .block {
@@ -65,7 +76,7 @@ p {
     width: 50px;
 }
 
-.test_block {
+.target {
     height: 50px;
     width: 50px;
 
@@ -73,4 +84,34 @@ p {
     border-width: 2px;
     border-color: white;
     background: linear-gradient(45deg, var(--color-neon-teal), var(--color-neon-pink));
+}
+
+.card {
+    border-radius: 50px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--color-neon-pink);
+
+    box-shadow: 0px 0px 20px 10px var(--color-neon-teal);
+}
+
+.card-link {
+    display: inline-block;
+    text-decoration: none;
+
+    color: white;
+}
+
+.board {
+    width: calc(100vw - 200px);
+    min-width: 500px;
+
+    height: calc(100vw - 200px);
+    min-height: 500px;
+    max-height: calc(100vh - 250px);
+
+    border-radius: 50px;
+
+    background: hsl(from var(--color-bg-dark) h s calc(5 * l));
+
 }

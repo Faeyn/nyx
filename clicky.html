@@ -12,31 +12,15 @@
                 <h1>
             </div>
         </div>
-        
+
+        <div id="board" class="board">
+            <div id="target" class="target" style="position: absolute">
+            </div>
+        </div>
         <p>
-        This is the start of something amazing!
-        </p>
-
-        <div class="row">
-            <div id="hello" class="block" style="background: var(--color-neon-yellow)">
-            </div>
-            <div class="block" style="background: var(--color-neon-teal)">
-            </div>
-            <div class="block" style="background: var(--color-neon-green)">
-            </div>
-            <div class="block" style="background: var(--color-neon-pink)">
-            </div>
-            <div class="block" style="background: var(--color-neon-blue)">
-            </div>
-        </div>
-
-        <div id="board" style="width:100vw; height:100vw; background: rgba(255, 255, 255, 0.05)">
-            <div id="test" class="test_block" style="position: absolute">
-            </div>
-        </div>
-        <p>Clicked: <span id="count">0</span> times</p>
-        <p>Miss: <span id="misscount">0</span> times </p>
-        <p>Stat: <span id="velocity">0</span> / m </p>
+        Click: <span id="count">0</span> times <br>
+        Miss: <span id="misscount">0</span> times <br>
+        Stat: <span id="velocity">0</span> / m </p>
         <script>
             
             function sleep(ms) {
@@ -47,13 +31,14 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             };
 
-            const board = document.getElementById("board");
-            const {width: boardWidth, height: boardHeight} = board.getBoundingClientRect();
 
-            const el = document.getElementById("test");
+            const el = document.getElementById("target");
             const {width: elWidth, height: elHeight} = el.getBoundingClientRect();
             
             function setPosition() {
+                const board = document.getElementById("board");
+                const {width: boardWidth, height: boardHeight} = board.getBoundingClientRect();
+
                 let x = randomIntBetween(boardWidth - elWidth, 0)
                 let y = randomIntBetween(boardHeight - elHeight, 0)
                 el.style.transform = `translate(${x}px, ${y}px)`;
