@@ -4,23 +4,23 @@
         <link rel="stylesheet" style="text/css" href="style.css"/>
         <title> Faeyndom </title>
     </head>
-    <body class="col">
-        <div class="header">
-            <div class="col vc">
-                <h1>
-                    Start
-                <h1>
+    <body>
+        <header-component></header-component>
+        <main>
+            <sidebar-component></sidebar-component>
+            <div class="content">
+                <div id="board" class="board">
+                    <div id="target" class="target" style="position: absolute">
+                    </div>
+                </div>
+                <p>
+                Click: <span id="count">0</span> times <br>
+                Miss: <span id="misscount">0</span> times <br>
+                Stat: <span id="velocity">0</span> / m </p>
             </div>
-        </div>
-
-        <div id="board" class="board">
-            <div id="target" class="target" style="position: absolute">
-            </div>
-        </div>
-        <p>
-        Click: <span id="count">0</span> times <br>
-        Miss: <span id="misscount">0</span> times <br>
-        Stat: <span id="velocity">0</span> / m </p>
+        </main>
+        <script src="header.js"></script>
+        <script src="sidebar.js"></script>
         <script>
             
             function sleep(ms) {
@@ -30,7 +30,6 @@
             function randomIntBetween(max, min) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             };
-
 
             const el = document.getElementById("target");
             const {width: elWidth, height: elHeight} = el.getBoundingClientRect();
@@ -44,14 +43,6 @@
                 el.style.transform = `translate(${x}px, ${y}px)`;
             }
 
-            //async function loop() {
-                //while (true) {
-                    //setPosition();
-                    //await sleep(1000);
-                //}
-            //};
-
-            //loop();
             setPosition(); 
 
             window.addEventListener("resize", () => {

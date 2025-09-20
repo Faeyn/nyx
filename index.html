@@ -4,38 +4,44 @@
         <link rel="stylesheet" style="text/css" href="style.css"/>
         <title> Faeyndom </title>
     </head>
-    <body class="col">
-        <div class="header">
-            <div class="col vc">
-                <h1>
-                    Start
-                <h1>
-            </div>
-        </div>
-        
-        <p>
-        This is the start of something amazing!
-        </p>
-
-        <div class="row">
-            <div id="hello" class="block" style="background: var(--color-neon-yellow)">
-            </div>
-            <div class="block" style="background: var(--color-neon-teal)">
-            </div>
-            <div class="block" style="background: var(--color-neon-green)">
-            </div>
-            <div class="block" style="background: var(--color-neon-pink)">
-            </div>
-            <div class="block" style="background: var(--color-neon-blue)">
-            </div>
-        </div>
-
-        <a href="clicky.html" class="card-link">
-            <div class="card" style="height:300px; width:300px">
-                <div class="cc">
-                    Click-idi-clack
+    <body>
+        <header-component></header-component>
+        <main>
+            <sidebar-component></sidebar-component> 
+            <div class="content">
+                <p>
+                This is the start of something amazing!
+                </p>
+                
+                <div class="row">
+                    <div id="hello" class="block" style="background: var(--clr-neon-yellow)">
+                    </div>
+                    <div class="block" style="background: var(--clr-neon-teal)">
+                    </div>
+                    <div class="block" style="background: var(--clr-neon-green)">
+                    </div>
+                    <div class="block" style="background: var(--clr-neon-pink)">
+                    </div>
+                    <div class="block" style="background: var(--clr-neon-blue)">
+                    </div>
+                </div>
+                <a href="clicky.html" class="link">
+                    <div class="card" style="height:150px; width:200px">
+                        <div class="cc">
+                            Click-idi-clack
+                        </div>
+                    </div>
+                </a>
+                <div class="row">            
+                    <div class="rotating-border"></div>
+                    <div class="rotating-border"></div>
+                    <div class="rotating-border"></div>
+                    <div class="rotating-border"></div>
                 </div>
             </div>
-        </a>
+            <sidebar-component></sidebar-component>
+        </main>
+        <script src="header.js"></script>
+        <script src="sidebar.js"></script>
     </body>
 </html>
