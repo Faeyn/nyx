@@ -4,11 +4,6 @@ class headerComponent extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
         <header class="header">
-            <a href="index.html" class="link">
-                <p class="blue">
-                    Start
-                </p>
-            </a>
             <p id="clock" class="blue">--:--:--</p>
         </header>
         `;
