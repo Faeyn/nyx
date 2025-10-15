@@ -1,2 +1,6 @@
 .git/
 .DS_store
+.mypy_cache/
+.venv
+.env
+__pycache__/
