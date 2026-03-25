@@ -23,6 +23,7 @@ html {
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    font-size: 20px;
 }
 
 html::-webkit-scrollbar {
@@ -76,6 +77,8 @@ a:hover {
     text-shadow:
         0px 0px 5px var(--clr-neon-pink),
         0px 0px 10px var(--clr-neon-pink);
+
+    text-decoration: underline;
 }
 
 .btn {
