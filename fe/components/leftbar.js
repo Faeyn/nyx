@@ -22,6 +22,7 @@ class leftbarComponent extends HTMLElement {
                     <li><a href="index.html">Start</a></li>
                     <li><a href="distraction.html">Distraction</a></li>
                     <li><a href="todo.html">ToDo</a></li>
+                    <li><a href="style.html">Style</a></li>
                 </ul>
             </div>
         </div>
