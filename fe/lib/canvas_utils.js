@@ -2,8 +2,8 @@ const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
 
 function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width  = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
 }
 resize();
 window.addEventListener('resize', resize);
@@ -18,6 +18,7 @@ let mouseY = 0;
 let mouseX = 0;
 
 window.addEventListener("mousemove", (event) => {
-    mouseX = event.clientX;
-    mouseY = event.clientY;
+    const rect = canvas.getBoundingClientRect();
+    mouseX = event.clientX - rect.left;
+    mouseY = event.clientY - rect.top;
 });
