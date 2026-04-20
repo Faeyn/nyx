@@ -13,3 +13,11 @@ const clr = name => css.getPropertyValue(name).trim();
 
 const cx = canvas.width  / 2;
 const cy = canvas.height / 2;
+
+let mouseY = 0;
+let mouseX = 0;
+
+window.addEventListener("mousemove", (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+});

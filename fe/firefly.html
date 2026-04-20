@@ -1,0 +1,32 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <title> Nyxion | Shee </title>
+    </head>
+
+    <body>
+        <canvas id="c"></canvas>
+        <header-component></header-component>
+        <main>
+            <leftbar-component></leftbar-component>
+            <div class="content">
+            </div>
+            <rightbar-component></rightbar-component>
+        </main>
+    </body>
+    <script src="components/header.js"></script>
+    <script src="components/leftbar.js"></script>
+    <script src="components/rightbar.js"></script>
+    <script src="lib/funcs.js"></script>
+    <script src="lib/canvas_utils.js"></script>
+    <script src="firefly.js"></script>
+    <script>
+        function animate(ts) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            firefly(ts)
+            requestAnimationFrame(animate)
+        }
+        requestAnimationFrame(animate);
+    </script>
+</html>

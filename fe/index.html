@@ -27,6 +27,7 @@
         </div>
         <div class="sidebar"></div>
     </main>
+    <script src="lib/funcs.js"></script>
     <script src="components/header.js"></script>
     <script src="components/leftbar.js"></script>
     <script src="lib/canvas_utils.js"></script>
@@ -36,7 +37,6 @@
     function animate(ts) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       orbiter(ts)
-      firefly(ts)
       requestAnimationFrame(animate)
     }
     requestAnimationFrame(animate);

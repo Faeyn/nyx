@@ -1,15 +1,29 @@
 const outerRadius = 40;
-function fly(x, y, ts) {
-    color = clr('--clr-neon-yellow');
-    
-    px = x;
-    py = canvas.height + outerRadius - (outerRadius + y + ts * speed) % canvas.height + outerRadius;
+const mouseDistance = 200;
+const numberOfFlies = 100;
 
+function drawFly(x, y, d_ratio, ts) {
+    color = clr('--clr-neon-yellow');
+   
+    // px = x;
+    px = x 
+    py = y + ts * speed * d_ratio;
+    if ( Math.abs(py - mouseY) ** 2 + Math.abs(px - mouseX) ** 2 + (d_ratio * 100) ** 2 < mouseDistance ** 2) {
+        px = x + ts * speed * 0.5 * Math.sign(mouseX - x) * d_ratio;
+    }
+
+    if (py < -outerRadius) {
+        py = canvas.height + outerRadius;
+        px = randomIntBetween(0, canvas.width);
+        distance = randomIntBetween(50, 100);
+    }
+
+  
     gradient = ctx.createRadialGradient(px, py, 0, px, py, outerRadius); 
-    gradient.addColorStop(0, color);
-    gradient.addColorStop(0.05, color);
-    gradient.addColorStop(0.1, color + '40');
-    gradient.addColorStop(1, color + '00');
+    gradient.addColorStop(0, hexToRgba(color, 1 * d_ratio));
+    gradient.addColorStop(0.05, hexToRgba(color, 1 * d_ratio));
+    gradient.addColorStop(0.1, hexToRgba(color, 0.25 * d_ratio));
+    gradient.addColorStop(1, hexToRgba(color, 0));
 
     ctx.save();
     ctx.beginPath();
@@ -17,41 +31,28 @@ function fly(x, y, ts) {
     ctx.arc(px, py, outerRadius, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
+
+    return {px, py, d_ratio};
 }
 
-const speed = 0.1;
+const speed = -0.1;
+
+var flies = Array.from({length: numberOfFlies}, () => ({
+    px: randomIntBetween(0, canvas.width),
+    py: randomIntBetween(0, canvas.height),
+    d_ratio: Math.random()
+}));
+
+var previousTimestamp;
 
 function firefly(ts) {
-    x = cx;
-    y = canvas.height;
+    if (!previousTimestamp) {
+        previousTimestamp = ts
+        return
+    }
 
-    fly(x, y, ts);
+    var dt = ts - previousTimestamp;
+    previousTimestamp = ts;
+    
+    flies = flies.map(fly => drawFly(fly.px, fly.py, fly.d_ratio, dt));
 }
-
-// function animate(ts) {
-
-    // obs.forEach((ob) => {
-    //     ob.pos.y -= ob.speed * dt;
-    //     if (Math.pow(ob.pos.y - mouseY, 2) + Math.pow(ob.pos.x - mouseX, 2) < Math.pow(dist, 2)) {
-    //         if (ob.pos.x < mouseX) {
-    //             ob.pos.x -= K * (dist - (ob.pos.x - mouseX));
-    //         } else {
-    //             ob.pos.x += K * (dist - (ob.pos.x - mouseX));
-    //         }
-    //     }
-
-    //     ob.object.style.transform = `translate(${ob.pos.x.toFixed(2)}px, ${ob.pos.y.toFixed(2)}px)`;
-
-    //     if (ob.pos.y < -100) {
-    //         createNew = true;
-    //         ob.pos.y = fieldBottom;
-    //         ob.pos.x = randomIntBetween(fieldRight, fieldLeft);
-    //     }
-    // })
-
-//     requestAnimationFrame(animate);
-// }
-
-// requestAnimationFrame(animate);
-
-

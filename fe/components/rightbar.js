@@ -6,7 +6,7 @@ class rightBar extends HTMLElement {
             <div style="height:50px"></div>
             <a href="clicky.html" class="btn" style="width:170px"> Click-idi-clack </a>
             <a href="timed-clicky.html" class="btn" style="width:170px"> Click-idi-timed</a>
-            <a href="shee.html" class="btn" style="width:170px"> Sheeee~~ </a>
+            <a href="firefly.html" class="btn" style="width:170px"> Sheeee~~ </a>
             <a href="bouncy.html" class="btn" style="width:170px"> Weewaah </a>
             <a href="pew.html" class="btn" style="width:170px"> pew pew pew </a>
         </div>
