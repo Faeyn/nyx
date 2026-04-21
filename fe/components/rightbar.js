@@ -9,6 +9,7 @@ class rightBar extends HTMLElement {
             <a href="firefly.html" class="btn" style="width:170px"> Sheeee~~ </a>
             <a href="bouncy.html" class="btn" style="width:170px"> Weewaah </a>
             <a href="pew.html" class="btn" style="width:170px"> pew pew pew </a>
+            <a href="fish.html" class="btn" style="width:170px"> Blup blup </a>
         </div>
         `;
 

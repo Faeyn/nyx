@@ -1,8 +1,16 @@
 let previousTimestamp;
+const circle = 2 * Math.PI;
 const radius = 20;
-const speed = 100;
+const speed = 200;
+const maxAngle = circle / 200;
 const color = clr('--clr-neon-pink');
 
+// TODO
+// - Add more segments with different distance to increase resolution
+// - Add tail fin
+// - Add eye
+// - Add swimming animation (e.g. tail fin wagging, body undulating)
+// - Add fins 
 
 function findUnitVector(x1, y1, x2, y2) {
     const dx = x2 - x1;
@@ -14,10 +22,10 @@ function findUnitVector(x1, y1, x2, y2) {
     return {dx: dx / length, dy: dy / length, length: length};
 }
 
-function drawBody(px, py, dx, dy) {
+function drawGuide(px, py, dx, dy, r) {
     ctx.save();
     ctx.beginPath();
-    ctx.arc(px, py, radius, 0, Math.PI * 2);
+    ctx.arc(px, py, r, 0, Math.PI * 2);
     ctx.lineWidth = 2;
     ctx.strokeStyle = color;
     ctx.stroke();
@@ -26,39 +34,86 @@ function drawBody(px, py, dx, dy) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(px, py);
-    ctx.lineTo(px + radius * dx, py + radius * dy);
+    ctx.lineTo(px + r * dx, py + r * dy);
     ctx.lineWidth = 2;
     ctx.strokeStyle = color;
     ctx.stroke();
     ctx.restore();
 }
 
-function drawFishHead(px, py, dt) {
-    const {dx, dy, length} = findUnitVector(px, py, mouseX, mouseY);
+function calcFishHead(dt, px, py, theta, r) {
+    var {dx, dy, length} = findUnitVector(px, py, mouseX, mouseY);
+
+    const targetAngle = Math.atan2(dy, dx);
+    let angleDiff = targetAngle - theta;
+    // normalize to [-π, π] to avoid wrapping jumps
+    angleDiff -= Math.round(angleDiff / (2 * Math.PI)) * 2 * Math.PI;
+
+    if (Math.abs(angleDiff) > maxAngle) {
+        theta += Math.sign(angleDiff) * maxAngle;
+        dx = Math.cos(theta);
+        dy = Math.sin(theta);
+    } else {
+        theta = targetAngle;
+    }
 
     px = px + dt * speed * dx;
     py = py + dt * speed * dy;
 
-    drawBody(px, py, dx, dy);
-    return {px, py}
+    // drawGuide(px, py, dx, dy, r);
+    return {px, py, theta, r}
 }
 
-function drawFishBody (px, py, pxt, pyt) {
+function calcFishBody (px, py, pxt, pyt, r) {
     const {dx, dy, length} = findUnitVector(px, py, pxt, pyt);
 
-    px = pxt - dx * radius;
-    py = pyt - dy * radius;
+    px = pxt - dx * r;
+    py = pyt - dy * r;
 
-    drawBody(px, py, dx, dy);
+    // drawGuide(px, py, dx, dy, r);
 
-    return {px, py}
+    return {px, py, theta: Math.atan2(dy, dx), r}
 }
 
+const fishBody = [32, 32, 32, 28, 24, 20, 16, 12, 8, 4];
 
-fishSegs = Array.from({length: 5}, (_, i) => ({
+var fishSegs = fishBody.map((r, i) => ({
     px: cx,
-    py: cy + i * radius
+    py: cy + i * r,
+    theta: 2 * Math.PI * 3 / 4,
+    r: r
 }));
+
+
+function drawFish(fishSegs) {
+    const n = fishSegs.length;
+    const {px: hpx, py: hpy, theta: ht, r: hr} = fishSegs[0];
+
+    ctx.save();
+    ctx.beginPath();
+
+    // nose point
+    ctx.moveTo(hpx + hr * Math.cos(ht), hpy + hr * Math.sin(ht));
+
+    // left side: head -> tail
+    for (let i = 0; i < n; i++) {
+        const {px, py, theta, r} = fishSegs[i];
+        ctx.lineTo(px + r * Math.cos(theta + circle/4), py + r * Math.sin(theta + circle/4));
+    }
+
+    // right side: tail -> head
+    for (let i = n - 1; i >= 0; i--) {
+        const {px, py, theta, r} = fishSegs[i];
+        ctx.lineTo(px + r * Math.cos(theta - circle/4), py + r * Math.sin(theta - circle/4));
+    }
+
+    ctx.closePath();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+    ctx.restore();
+}
+
 
 function fishAnimation(ts) {
     if (!previousTimestamp) {
@@ -69,12 +124,11 @@ function fishAnimation(ts) {
     var dt = (ts - previousTimestamp) / 1000;
     previousTimestamp = ts;
 
-    fishHead = fishSegs[0]
-    const {px, py} = drawFishHead(fishHead.px, fishHead.py, dt)
-    fishSegs[0] = {px, py}
+    fishSegs[0] = calcFishHead(dt, fishSegs[0].px, fishSegs[0].py, fishSegs[0].theta, fishSegs[0].r);
 
     for (let i = 1; i < fishSegs.length; i ++) {
-        const {px, py} = drawFishBody(fishSegs[i].px, fishSegs[i].py, fishSegs[i-1].px, fishSegs[i-1].py)
-        fishSegs[i] = {px, py}
+        fishSegs[i] = calcFishBody(fishSegs[i].px, fishSegs[i].py, fishSegs[i-1].px, fishSegs[i-1].py, fishSegs[i].r)
     }
+
+    drawFish(fishSegs);
 }
